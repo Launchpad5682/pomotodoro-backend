@@ -27,9 +27,22 @@ Body:
 
 ```
 {
-	"username": "launchpad96",
-	"email": "launchpad96@gmail.com",
+	"username": "saurabh21suthar",
+	"email": "saurabh21suthar@gmail.com",
 	"password": "qwerty1234"
+}
+```
+### Response
+```
+{
+	"message": "User created successfully",
+	"body": {
+		"userData": {
+			"_id": "62f40e341232226682194584",
+			"username": "saurabh21suthar"
+		},
+		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY0MGUzNDEyMzIyMjY2ODIxOTQ1ODQiLCJpYXQiOjE2NjAxNjE1ODgsImV4cCI6MTY2MDI0Nzk4OH0.7U9dF1NAxR7yxzKy2h-6m-nC7lNZptEgWZuEvCH6g2E"
+	}
 }
 ```
 
