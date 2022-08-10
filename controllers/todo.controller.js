@@ -77,6 +77,19 @@ const updateTodo = async (req, res) => {
   }
 };
 
-const deleteTodo = async (req, res) => {};
+const deleteTodo = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const onDelete = await Todo.deleteOne({ _id });
+    console.log(onDelete, "delete todo");
+    res.status(200).json({
+      message: "Successfully deleted",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Something went wrong",
+    });
+  }
+};
 
 module.exports = { createTodo, updateTodo, deleteTodo };
