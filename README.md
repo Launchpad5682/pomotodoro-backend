@@ -16,7 +16,119 @@
 
 ```
 
-## Documentation
+# Documentation
+
+## Signup User
+
+### Request
+
+`POST` `https://localhost:3000/v1/signup` <br>
+Body:
+
+```
+{
+	"username": "launchpad96",
+	"email": "launchpad96@gmail.com",
+	"password": "qwerty1234"
+}
+```
+
+## Login User
+
+### Request
+
+`POST` `http://localhost:3000/v1/login` <br>
+Body:
+
+```
+{
+    "email": "launchpad5682@gmail.com",
+    "password": "qwerty1234"
+}
+```
+
+### Response <br>
+
+```
+{
+	"message": "Successfully authenticated",
+	"body": {
+		"userData": {
+			"_id": "62f0b70da479bcb412945aaf",
+			"username": "launchpad5682"
+		},
+		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmYwYjcwZGE0NzliY2I0MTI5NDVhYWYiLCJpYXQiOjE2NjAxNTAzMTQsImV4cCI6MTY2MDIzNjcxNH0.phHbB7zwEBoBc2ut4TaxTJ4ziHmaLtB6nOCayeDLqXM"
+	}
+}
+```
+
+## Get All Todos
+
+### Request
+
+`GET` `http://localhost:3000/v1/todos/:username`
+Body:
+
+```
+
+```
+
+### Response
+
+```
+
+```
+
+## Add Todo
+
+### Request
+
+`POST` `http://localhost:3000/v1/todo`
+Body:
+
+```
+
+```
+
+### Response
+
+```
+
+```
+
+## Update Todo
+
+### Request
+
+`PUT` `http://localhost:3000/v1/todo`
+Body:
+
+```
+
+```
+
+### Response
+
+```
+
+```
+
+## Delete Todo
+
+### Request
+
+`POST` `http://localhost:3000/v1/todo`
+Body:
+
+```
+
+```
+
+### Response
+
+```
+
+```
 
 ## Development Mode
 
