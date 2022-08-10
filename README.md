@@ -66,7 +66,13 @@ Body:
 
 ### Request
 
-`GET` `http://localhost:3000/v1/todos/:username`
+`GET` `http://localhost:3000/v1/todos/:username`<br>
+Header: <br>
+
+```
+authorization: "add_token_here"
+```
+
 Body:
 
 ```
@@ -83,7 +89,13 @@ Body:
 
 ### Request
 
-`POST` `http://localhost:3000/v1/todo`
+`POST` `http://localhost:3000/v1/todo`<br>
+Header: <br>
+
+```
+authorization: "add_token_here"
+```
+
 Body:
 
 ```
@@ -100,7 +112,13 @@ Body:
 
 ### Request
 
-`PUT` `http://localhost:3000/v1/todo`
+`PUT` `http://localhost:3000/v1/todo` <br>
+Header: <br>
+
+```
+authorization: "add_token_here"
+```
+
 Body:
 
 ```
@@ -117,17 +135,27 @@ Body:
 
 ### Request
 
-`POST` `http://localhost:3000/v1/todo`
+`DELETE` `http://localhost:3000/v1/todo` <br>
+Header: <br>
+
+```
+authorization: "add_token_here"
+```
+
 Body:
 
 ```
-
+{
+    "_id": "todo_id"
+}
 ```
 
 ### Response
 
 ```
-
+{
+    "message": "Successfully deleted"
+}
 ```
 
 ## Development Mode
