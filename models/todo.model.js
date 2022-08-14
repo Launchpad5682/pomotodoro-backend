@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const _ = require("lodash");
 
+const ObjectId = Schema.ObjectId;
+
 const todoSchema = new Schema({
   title: String,
   description: String,
@@ -10,9 +12,9 @@ const todoSchema = new Schema({
   longBreakTime: Number,
   timerMode: { type: String, enum: ["focus", "short", "long"] },
   breakCount: Number,
-  timeStamp: Number,
+  timeStamp: Schema.Types.Mixed,
   completed: Boolean,
-  username: String,
+  userID: ObjectId,
 });
 
 const Todo = new mongoose.model("Todo", todoSchema);
