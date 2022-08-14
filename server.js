@@ -8,7 +8,7 @@ const todosV1 = require("./routes/todo.router");
 app.use(express.json());
 app.use(cors());
 
-const port = 3000;
+const port = 3002;
 
 connectToDB();
 
