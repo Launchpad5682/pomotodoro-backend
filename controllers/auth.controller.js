@@ -26,7 +26,7 @@ const signUpHandler = (req, res, next) => {
         expiresIn: "24h",
       });
 
-      newUser = _.pick(newUser, ["_id", "username"]);
+      newUser = _.pick(newUser, ["username"]);
 
       res.status(201).json({
         message: "User created successfully",
@@ -52,10 +52,10 @@ const signUpHandler = (req, res, next) => {
 const loginHandler = (req, res, next) => {
   catchError(next, async () => {
     const { email, password } = req.body;
-    console.log(email, password);
+    
     try {
       const user = await User.findOne({ email });
-      console.log(user);
+      
       if (user) {
         const validPassword = await bcrypt.compare(password, user.password);
 
