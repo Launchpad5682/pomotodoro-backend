@@ -1,53 +1,34 @@
 const { Todo } = require("../models/todo.model");
 const _ = require("lodash");
+const mongoose = require("mongoose");
+const catchError = require("../utils/catchError");
 
-const createTodo = async (req, res) => {
-  const body = req.body;
+const getTodos = (req, res, next) => {
+  catchError(next, async () => {
+    const userID = req.userID;
+    try {
+      const todos = await Todo.find({ userID });
 
-  let newTodo = new Todo(body);
-
-  try {
-    newTodo = await newTodo.save();
-
-    newTodo = _.pick(newTodo, [
-      "_id",
-      "title",
-      "description",
-      "focusTime",
-      "shortBreakTime",
-      "longBreakTime",
-      "timerMode",
-      "breakCount",
-      "timeStamp",
-      "completed",
-      "username",
-    ]);
-
-    res.status(201).json({
-      message: "Todo successfully created",
-      body: { ...newTodo },
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "Something went wrong",
-    });
-  }
+      res.status(200).json({
+        todos,
+      });
+    } catch (error) {}
+  });
 };
 
-const updateTodo = async (req, res) => {
-  const body = req.body;
-  const { _id, ...todo } = body;
+const createTodo = (req, res, next) => {
+  catchError(next, async () => {
+    const body = req.body;
+    const _id = req.userID;
 
-  try {
-    let newTodo = await Todo.findOneAndUpdate(
-      { _id },
-      { ...todo },
-      { new: true }
-    );
-    console.log(newTodo);
+    try {
+      const newTodo = new Todo({
+        ...body.todo,
+        userID: mongoose.Types.ObjectId(_id),
+      });
+      newTodo.save();
 
-    if (newTodo) {
-      newTodo = _.pick(newTodo, [
+      const todo = _.pick(newTodo, [
         "_id",
         "title",
         "description",
@@ -58,38 +39,84 @@ const updateTodo = async (req, res) => {
         "breakCount",
         "timeStamp",
         "completed",
-        "username",
       ]);
-      res.status(204).json({
-        message: "Todo successfully updated",
-        body: { ...newTodo },
+
+      res.status(201).json({
+        message: "Todo successfully created",
+        todo,
       });
-    } else {
+    } catch (error) {
       res.status(400).json({
-        message: "No todo found",
+        message: "Something went wrong",
       });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({
-      message: "Something went wrong",
-    });
-  }
+  });
 };
 
-const deleteTodo = async (req, res) => {
-  const { _id } = req.body;
-  try {
-    const onDelete = await Todo.deleteOne({ _id });
-    console.log(onDelete, "delete todo");
-    res.status(200).json({
-      message: "Successfully deleted",
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "Something went wrong",
-    });
-  }
+const updateTodo = async (req, res, next) => {
+  catchError(next, async () => {
+    const body = req.body;
+    const { todo } = body;
+
+    try {
+      const updatedTodo = _.pick(todo, [
+        "title",
+        "description",
+        "focusTime",
+        "shortBreakTime",
+        "longBreakTime",
+        "timerMode",
+        "breakCount",
+        "timeStamp",
+        "completed",
+      ]);
+
+      const newTodo = await Todo.findOneAndUpdate(
+        { _id: todo._id },
+        updatedTodo
+      );
+
+      const updatedNewTodo = _.pick(todo, [
+        "_id",
+        "title",
+        "description",
+        "focusTime",
+        "shortBreakTime",
+        "longBreakTime",
+        "timerMode",
+        "breakCount",
+        "timeStamp",
+        "completed",
+      ]);
+
+      res.status(200).json({
+        message: "Todo successfully updated",
+        todo: updatedNewTodo,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        message: "Something went wrong",
+      });
+    }
+  });
 };
 
-module.exports = { createTodo, updateTodo, deleteTodo };
+const deleteTodo = (req, res, next) => {
+  catchError(next, async () => {
+    const { todoID } = req.params;
+    try {
+      const onDelete = await Todo.deleteOne({ _id: todoID });
+
+      res.status(204).json({
+        message: "Successfully deleted",
+      });
+    } catch (error) {
+      res.status(400).json({
+        message: "Something went wrong",
+      });
+    }
+  });
+};
+
+module.exports = { getTodos, createTodo, updateTodo, deleteTodo };
