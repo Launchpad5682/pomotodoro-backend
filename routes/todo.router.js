@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const { authenticateUser } = require("../middlewares/authenticateUser");
-const { createTodo, updateTodo, deleteTodo } = require("../controllers/todo.controller");
+const {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} = require("../controllers/todo.controller");
 
 /**Get all the todos from the specific user */
-router.get("/todos/:username", authenticateUser, (req, res) => {
-  const { username } = req.params;
-  res.status(200).json({
-    hello: "world",
-  });
-});
+router.get("/todos", authenticateUser, getTodos);
 
 router.post("/todo", authenticateUser, createTodo);
 
 router.put("/todo", authenticateUser, updateTodo);
 
-router.delete("/todo", authenticateUser, deleteTodo);
+router.delete("/todo/:todoID", authenticateUser, deleteTodo);
 
 module.exports = router;
